@@ -537,7 +537,7 @@ footer {
     <!-- ── SLOT 2 (Cadastramento de Dados) ── -->
     <div class="demo-row">
       <div class="demo-text">
-        <h3 class="demo-title" id="rt-1" contenteditable="false" spellcheck="false">Cadastramento de Clientes</h3>
+        <h3 class="demo-title" id="rt-1" contenteditable="false" spellcheck="false">Cadastro de clientes</h3>
         <p class="demo-description" id="rd-1" contenteditable="false" spellcheck="false">Luna solicita e valida os dados de cadastro do cliente de forma automática e integrada, reduzindo o tempo de atendimento e erros de digitação.</p>
       </div>
       <div class="phone-frame">
@@ -550,7 +550,7 @@ footer {
           </div>
           <div class="url-ov" id="ov-1">
             <span class="ov-label">Caminho ou Link do Vídeo</span>
-            <input type="text" id="inp-1" placeholder="Ex: Cadastramento de dados.mp4..." value="Cadastramento de dados.mp4"/>
+            <input type="text" id="inp-1" placeholder="Ex: Cadastro.mp4..." value="Cadastro.mp4"/>
             <div class="ov-btns">
               <button class="btn-ok" onclick="applyVid(1)">Confirmar</button>
               <button class="btn-x" onclick="closeOv(1)">✕</button>
@@ -799,6 +799,13 @@ function loadPageData() {
     var updated = false;
     data.forEach(function(item, i) {
       if (i >= 5) return;
+      if (i === 1 && item.videoUrl === 'Cadastramento de dados.mp4') {
+        item.videoUrl = 'Cadastro.mp4';
+        if (item.sideTitle === 'Cadastramento de Clientes') {
+          item.sideTitle = 'Cadastro de clientes';
+        }
+        updated = true;
+      }
       if (i === 3 && item.videoUrl === 'Finalização e orçamento.mp4') {
         item.videoUrl = 'Finalizar_Pagamento.mp4';
         if (item.sideTitle === 'Finalização e Vendas') {
