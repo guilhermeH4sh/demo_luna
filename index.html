@@ -603,7 +603,7 @@ footer {
     <!-- ── SLOT 4 (Finalização & Conversão) ── -->
     <div class="demo-row">
       <div class="demo-text">
-        <h3 class="demo-title" id="rt-3" contenteditable="false" spellcheck="false">Finalização e Vendas</h3>
+        <h3 class="demo-title" id="rt-3" contenteditable="false" spellcheck="false">Finalização e pagamento</h3>
         <p class="demo-description" id="rd-3" contenteditable="false" spellcheck="false">O cliente é guiado de forma transparente até o fechamento da compra, realizando o pagamento de forma simples e segura pelo próprio chat.</p>
       </div>
       <div class="phone-frame">
@@ -616,7 +616,7 @@ footer {
           </div>
           <div class="url-ov" id="ov-3">
             <span class="ov-label">Caminho ou Link do Vídeo</span>
-            <input type="text" id="inp-3" placeholder="Ex: Finalização e orçamento.mp4..." value="Finalização e orçamento.mp4"/>
+            <input type="text" id="inp-3" placeholder="Ex: Finalizar_Pagamento.mp4..." value="Finalizar_Pagamento.mp4"/>
             <div class="ov-btns">
               <button class="btn-ok" onclick="applyVid(3)">Confirmar</button>
               <button class="btn-x" onclick="closeOv(3)">✕</button>
@@ -649,7 +649,7 @@ footer {
           </div>
           <div class="url-ov" id="ov-4">
             <span class="ov-label">Caminho ou Link do Vídeo</span>
-            <input type="text" id="inp-4" placeholder="Ex: Pedido por imagem.mp4..." value="Pedido por imagem.mp4"/>
+            <input type="text" id="inp-4" placeholder="Ex: Pedido_imagem.mp4..." value="Pedido_imagem.mp4"/>
             <div class="ov-btns">
               <button class="btn-ok" onclick="applyVid(4)">Confirmar</button>
               <button class="btn-x" onclick="closeOv(4)">✕</button>
@@ -794,6 +794,27 @@ function loadPageData() {
       });
       localStorage.setItem('centrus_demo_data', JSON.stringify(data));
     }
+    
+    // Migrar/atualizar valores antigos de localStorage para os novos vídeos e títulos
+    var updated = false;
+    data.forEach(function(item, i) {
+      if (i >= 5) return;
+      if (i === 3 && item.videoUrl === 'Finalização e orçamento.mp4') {
+        item.videoUrl = 'Finalizar_Pagamento.mp4';
+        if (item.sideTitle === 'Finalização e Vendas') {
+          item.sideTitle = 'Finalização e pagamento';
+        }
+        updated = true;
+      }
+      if (i === 4 && item.videoUrl === 'Pedido por imagem.mp4') {
+        item.videoUrl = 'Pedido_imagem.mp4';
+        updated = true;
+      }
+    });
+    if (updated) {
+      localStorage.setItem('centrus_demo_data', JSON.stringify(data));
+    }
+
     data.forEach(function(item, i) {
       if (i >= 5) return;
       var inpEl = document.getElementById('inp-' + i);
