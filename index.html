@@ -778,6 +778,13 @@ function applyVid(i, isInit) {
         v.style.left = '-55.06%';
         v.style.top = '-9.10%';
         v.style.objectFit = 'fill';
+      } else {
+        // Zoom de 1.45x nos outros vídeos 9:16 para manter a mesma escala visual de zoom
+        v.style.width = '145%';
+        v.style.height = '145%';
+        v.style.left = '-22.5%';
+        v.style.top = '-22.5%';
+        v.style.objectFit = 'cover';
       }
     });
 
