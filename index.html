@@ -550,7 +550,7 @@ footer {
           </div>
           <div class="url-ov" id="ov-1">
             <span class="ov-label">Caminho ou Link do Vídeo</span>
-            <input type="text" id="inp-1" placeholder="Ex: Cadastro.mp4..." value="Cadastro.mp4"/>
+            <input type="text" id="inp-1" placeholder="Ex: Cadastro1.0.mp4..." value="Cadastro1.0.mp4"/>
             <div class="ov-btns">
               <button class="btn-ok" onclick="applyVid(1)">Confirmar</button>
               <button class="btn-x" onclick="closeOv(1)">✕</button>
@@ -754,25 +754,30 @@ function applyVid(i, isInit) {
     v.controls = false;
     v.src = url;
     
-    // Ajustar caso o vídeo seja quadrado (ex: Cadastro.mp4 com faixas pretas)
+    // Ajustar caso o vídeo seja Cadastro1.0.mp4 (16:9 landscape com faixas pretas) ou Cadastro.mp4 (1:1 com faixas pretas)
     v.addEventListener('loadedmetadata', function() {
-      if (v.videoWidth && v.videoHeight && Math.abs((v.videoWidth / v.videoHeight) - 1.0) < 0.05) {
-        if (url.indexOf('Cadastro.mp4') !== -1) {
-          v.style.width = '210.12%';
-          v.style.height = 'auto';
-          v.style.aspectRatio = '1 / 1';
-          v.style.left = '-66.54%';
-          v.style.top = '-9.10%';
-          v.style.objectFit = 'fill';
-        } else {
-          // Ajuste genérico para vídeos 1:1 centralizados
-          v.style.width = '210.12%';
-          v.style.height = 'auto';
-          v.style.aspectRatio = '1 / 1';
-          v.style.left = '-55.06%';
-          v.style.top = '-9.10%';
-          v.style.objectFit = 'fill';
-        }
+      if (url.indexOf('Cadastro1.0.mp4') !== -1) {
+        v.style.width = '362.26%';
+        v.style.height = 'auto';
+        v.style.aspectRatio = '16 / 9';
+        v.style.left = '-131.13%';
+        v.style.top = '-7.31%';
+        v.style.objectFit = 'fill';
+      } else if (url.indexOf('Cadastro.mp4') !== -1) {
+        v.style.width = '210.12%';
+        v.style.height = 'auto';
+        v.style.aspectRatio = '1 / 1';
+        v.style.left = '-66.54%';
+        v.style.top = '-9.10%';
+        v.style.objectFit = 'fill';
+      } else if (v.videoWidth && v.videoHeight && Math.abs((v.videoWidth / v.videoHeight) - 1.0) < 0.05) {
+        // Ajuste genérico para vídeos 1:1 centralizados
+        v.style.width = '210.12%';
+        v.style.height = 'auto';
+        v.style.aspectRatio = '1 / 1';
+        v.style.left = '-55.06%';
+        v.style.top = '-9.10%';
+        v.style.objectFit = 'fill';
       }
     });
 
@@ -822,8 +827,8 @@ function loadPageData() {
     var updated = false;
     data.forEach(function(item, i) {
       if (i >= 5) return;
-      if (i === 1 && item.videoUrl === 'Cadastramento de dados.mp4') {
-        item.videoUrl = 'Cadastro.mp4';
+      if (i === 1 && (item.videoUrl === 'Cadastramento de dados.mp4' || item.videoUrl === 'Cadastro.mp4')) {
+        item.videoUrl = 'Cadastro1.0.mp4';
         if (item.sideTitle === 'Cadastramento de Clientes') {
           item.sideTitle = 'Cadastro de clientes';
         }
