@@ -431,10 +431,119 @@ iframe.vid-iframe {
 }
 .btn-cta:hover { background: var(--purple-mid); transform: translateY(-2px); }
 
-footer {
-  text-align: center; padding: 1.75rem;
+/* ─── FOOTER ─── */
+.main-footer {
   border-top: 1px solid var(--border);
-  color: var(--text-muted); font-size: 0.77rem;
+  padding: 4.5rem 3.5rem 2rem;
+  background: rgba(7, 7, 9, 0.6);
+  backdrop-filter: blur(10px);
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 3rem;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.brand-col {
+  max-width: 320px;
+}
+
+.brand-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.social-links a {
+  color: var(--text-muted);
+  transition: color 0.2s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.social-links a:hover {
+  color: var(--purple-light);
+  transform: translateY(-2px);
+}
+
+.footer-col h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0;
+}
+
+.footer-col ul li a {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-col ul li a:hover {
+  color: var(--purple-light);
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 3.5rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Responsividade do Footer */
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .main-footer {
+    padding: 3.5rem 1.5rem 1.5rem;
+  }
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .brand-col {
+    max-width: 100%;
+  }
+  .footer-bottom {
+    margin-top: 2.5rem;
+  }
 }
 
 @keyframes fadeUp {
@@ -683,7 +792,74 @@ footer {
   </section>
 </div>
 
-<footer>© 2026 Centrus. Todos os direitos reservados.</footer>
+<!-- ─── FOOTER ─── -->
+<footer class="main-footer">
+  <div class="footer-container">
+    <!-- Coluna 1: Logo & Descrição -->
+    <div class="footer-col brand-col">
+      <a class="logo" href="#">
+        <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="47" fill="#0a0a0c" stroke="white" stroke-width="2.5"/>
+          <circle cx="50" cy="41" r="17" fill="none" stroke="white" stroke-width="2.2"/>
+          <line x1="33" y1="41" x2="67" y2="41" stroke="white" stroke-width="2.2"/>
+          <text x="50" y="76" text-anchor="middle" fill="#7C3AF7" font-size="15.5"
+                font-weight="700" font-family="'Syne',sans-serif" letter-spacing="-0.5">centrus</text>
+        </svg>
+        <span class="logo-name">centrus</span>
+      </a>
+      <p class="brand-desc">IA que transforma atendimentos em vendas, dados e inteligência.</p>
+      <div class="social-links">
+        <a href="https://www.linkedin.com/company/centrus-intelig%C3%AAncia-artificial/" target="_blank" aria-label="LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/centrus.ai/" target="_blank" aria-label="Instagram">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Coluna 2: Empresa -->
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="https://centrusai.com/" target="_blank">Sobre a Centrus</a></li>
+        <li><a href="https://centrusai.com/" target="_blank">Planos e Preços</a></li>
+        <li><a href="https://centrusai.com/blog" target="_blank">Blog</a></li>
+        <li><a href="https://centrusai.com/#contato" target="_blank">Contato</a></li>
+      </ul>
+    </div>
+
+    <!-- Coluna 3: Legal -->
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <ul>
+        <li><a href="https://centrusai.com/politica-de-privacidade" target="_blank">Política de Privacidade</a></li>
+        <li><a href="https://centrusai.com/termos-de-uso" target="_blank">Termos de Uso</a></li>
+      </ul>
+    </div>
+
+    <!-- Coluna 4: Contato -->
+    <div class="footer-col">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="https://wa.me/5561995192687" target="_blank">WhatsApp de Suporte</a></li>
+        <li><a href="https://wa.me/5561995192687" target="_blank">Atendimento WhatsApp - (61) 99519-2687</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© Centrus AI. Todos os direitos reservados.</p>
+  </div>
+</footer>
 
 <script>
 var editing = false;
