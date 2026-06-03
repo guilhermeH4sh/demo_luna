@@ -550,7 +550,7 @@ footer {
           </div>
           <div class="url-ov" id="ov-1">
             <span class="ov-label">Caminho ou Link do Vídeo</span>
-            <input type="text" id="inp-1" placeholder="Ex: Cadastro1.0.mp4..." value="Cadastro1.0.mp4"/>
+            <input type="text" id="inp-1" placeholder="Ex: Cadastro3.0.mp4..." value="Cadastro3.0.mp4"/>
             <div class="ov-btns">
               <button class="btn-ok" onclick="applyVid(1)">Confirmar</button>
               <button class="btn-x" onclick="closeOv(1)">✕</button>
@@ -754,21 +754,46 @@ function applyVid(i, isInit) {
     v.controls = false;
     v.src = url;
     
-    // Ajustar caso o vídeo seja Cadastro1.0.mp4 (16:9 landscape com faixas pretas) ou Cadastro.mp4 (1:1 com faixas pretas)
+    // Ajuste dinâmico e matemático para cobrir o iPhone sem faixas pretas nas laterais/bordas
     v.addEventListener('loadedmetadata', function() {
-      if (url.indexOf('Cadastro1.0.mp4') !== -1) {
-        v.style.width = '362.26%';
-        v.style.height = 'auto';
-        v.style.aspectRatio = '16 / 9';
-        v.style.left = '-131.13%';
-        v.style.top = '-7.31%';
-        v.style.objectFit = 'fill';
-      } else if (url.indexOf('Cadastro.mp4') !== -1) {
-        v.style.width = '210.12%';
-        v.style.height = 'auto';
-        v.style.aspectRatio = '1 / 1';
-        v.style.left = '-66.54%';
-        v.style.top = '-9.10%';
+      var filename = url.substring(url.lastIndexOf('/') + 1);
+      try {
+        filename = decodeURIComponent(filename);
+      } catch(e) {}
+
+      var videoConfigs = {
+        'Recepção e triagem.mp4': { w: 1080, h: 1920, left: 80, right: 80, top: 19, bottom: 126 },
+        'Cadastro3.0.mp4': { w: 1080, h: 1920, left: 82, right: 85, top: 41, bottom: 0 },
+        'Cadastro1.0.mp4': { w: 1920, h: 1080, left: 704, right: 703, top: 41, bottom: 90 },
+        'Pedido de medicamentos.mp4': { w: 1080, h: 1920, left: 84, right: 0, top: 46, bottom: 142 },
+        'Finalizar_Pagamento.mp4': { w: 1080, h: 1920, left: 79, right: 83, top: 28, bottom: 128 },
+        'Pedido_imagem.mp4': { w: 1080, h: 1920, left: 115, right: 116, top: 72, bottom: 173 },
+        'Pedido por imagem.mp4': { w: 1080, h: 1920, left: 73, right: 73, top: 36, bottom: 21 },
+        'Finalização e orçamento.mp4': { w: 1080, h: 1920, left: 73, right: 73, top: 27, bottom: 59 }
+      };
+
+      var config = videoConfigs[filename];
+      if (config) {
+        var activeW = config.w - config.left - config.right;
+        var activeH = config.h - config.top - config.bottom;
+        var containerAspect = 9 / 16;
+        var activeAspect = activeW / activeH;
+
+        var scale;
+        if (activeAspect < containerAspect) {
+          scale = config.w / activeW;
+        } else {
+          scale = config.h / activeH;
+        }
+
+        var widthPercent = scale * 100;
+        var videoAspect = config.w / config.h;
+        var heightPercent = widthPercent / videoAspect * containerAspect;
+
+        v.style.width = widthPercent + '%';
+        v.style.height = heightPercent + '%';
+        v.style.left = - (config.left / config.w * widthPercent) + '%';
+        v.style.top = - (config.top / config.h * heightPercent) + '%';
         v.style.objectFit = 'fill';
       } else if (v.videoWidth && v.videoHeight && Math.abs((v.videoWidth / v.videoHeight) - 1.0) < 0.05) {
         // Ajuste genérico para vídeos 1:1 centralizados
@@ -778,6 +803,13 @@ function applyVid(i, isInit) {
         v.style.left = '-55.06%';
         v.style.top = '-9.10%';
         v.style.objectFit = 'fill';
+      } else {
+        // Fallback padrão: cobrir toda a tela
+        v.style.width = '100%';
+        v.style.height = '100%';
+        v.style.left = '0';
+        v.style.top = '0';
+        v.style.objectFit = 'cover';
       }
     });
 
@@ -827,8 +859,8 @@ function loadPageData() {
     var updated = false;
     data.forEach(function(item, i) {
       if (i >= 5) return;
-      if (i === 1 && (item.videoUrl === 'Cadastramento de dados.mp4' || item.videoUrl === 'Cadastro.mp4')) {
-        item.videoUrl = 'Cadastro1.0.mp4';
+      if (i === 1 && (item.videoUrl === 'Cadastramento de dados.mp4' || item.videoUrl === 'Cadastro.mp4' || item.videoUrl === 'Cadastro1.0.mp4')) {
+        item.videoUrl = 'Cadastro3.0.mp4';
         if (item.sideTitle === 'Cadastramento de Clientes') {
           item.sideTitle = 'Cadastro de clientes';
         }
